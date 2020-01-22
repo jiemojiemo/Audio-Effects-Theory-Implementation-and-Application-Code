@@ -107,8 +107,7 @@ void Basic_delay_with_feedbackAudioProcessor::prepareToPlay (double sampleRate, 
     const int num_output_channel = 2;
     delayBuffer_.setSize(num_output_channel, delayBufferLength_);
 
-    delayReadPosition_ = (int)(delayWritePosition_ - (delayLength_ * getSampleRate())
-        + delayBufferLength_) % delayBufferLength_;
+    updateDelayBufferReadPointer();
 }
 
 void Basic_delay_with_feedbackAudioProcessor::releaseResources()
@@ -207,6 +206,25 @@ void Basic_delay_with_feedbackAudioProcessor::setStateInformation (const void* d
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
+}
+void Basic_delay_with_feedbackAudioProcessor::setDryMix(float DryMix) {
+    dryMix_ = DryMix;
+}
+void Basic_delay_with_feedbackAudioProcessor::setWetMix(float WetMix) {
+    wetMix_ = WetMix;
+}
+void Basic_delay_with_feedbackAudioProcessor::setFeedback(float Feedback) {
+    feedback_ = Feedback;
+}
+void Basic_delay_with_feedbackAudioProcessor::setDelayLength(float DelayLength) {
+    delayLength_ = DelayLength;
+
+    updateDelayBufferReadPointer();
+}
+void Basic_delay_with_feedbackAudioProcessor::updateDelayBufferReadPointer()
+{
+    delayReadPosition_ = (int)(delayWritePosition_ - (delayLength_ * getSampleRate())
+        + delayBufferLength_) % delayBufferLength_;
 }
 
 //==============================================================================

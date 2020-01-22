@@ -55,13 +55,21 @@ public:
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    void setDelayLength(float DelayLength);
+    void setDryMix(float DryMix);
+    void setWetMix(float WetMix);
+    void setFeedback(float Feedback);
+
+private:
+    void updateDelayBufferReadPointer();
+
 private:
     float delayLength_ = 0.5;
     float dryMix_ = 1.0;
     float wetMix_ = 0.5;
     float feedback_ = 0.75;
 
-    size_t delayBufferLength_ = 1;
+    int delayBufferLength_ = 1;
     size_t delayReadPosition_ = 0;
     size_t delayWritePosition_ = 0;
 
